@@ -1,7 +1,5 @@
 # fast-indexer
 
-## 1. xgandalf
-
 A fast indexer based on [xgandalf](https://www.desy.de/~twhite/crystfel/manual-indexamajig.html).
 
 To install, you first need to install ```ninja```, ```meson```, ```eigen3``` and a decent C++ compiler. On Arch Linux this can be done with:
@@ -35,5 +33,9 @@ Finally let's make the binary accessible globally linking to a proper global pat
 ```bash
 fatstindexingdir=$(pwd)
 cd ~/bin/
-ln -s ${fatstindexingdir}/test.sh xgandalf-fast
+ln -s ${fatstindexingdir}/test.sh xgandalfHCS
 ```
+
+## Example usage
+
+To see an example of how to use it (on ra.psi.ch) see the [notebook](./example/Example.ipynb) in the folder example.

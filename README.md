@@ -4,7 +4,7 @@
 
 A fast indexer based on [xgandalf](https://www.desy.de/~twhite/crystfel/manual-indexamajig.html).
 
-To install, you first need to install ```ninja```, ```meson``` and a decent C++ compiler. On Arch Linux this can be done with:
+To install, you first need to install ```ninja```, ```meson```, ```eigen3``` and a decent C++ compiler. On Arch Linux this can be done with:
 
 ```bash
 sudo pacman -S ninja meson

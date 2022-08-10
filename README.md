@@ -4,7 +4,15 @@
 
 A fast indexer based on [xgandalf](https://www.desy.de/~twhite/crystfel/manual-indexamajig.html).
 
-To install:
+To install, first rebuild the original tgz achive with:
+
+```bash
+cd xgandalf
+cat xgandalf_wrapper.tar.gz.parta* >  xgandalf_wrapper.tar.gz
+tar xzvf xgandalf_wrapper.tar.gz
+```
+
+Now let's compile it with: 
 
 ```bash
 cd fast_indexer_dev

@@ -2,7 +2,7 @@
 
 ## 1. xgandalf
 
-A fast indexer based on (xgandalf)[https://www.desy.de/~twhite/crystfel/manual-indexamajig.html].
+A fast indexer based on [xgandalf](https://www.desy.de/~twhite/crystfel/manual-indexamajig.html).
 
 To install:
 

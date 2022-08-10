@@ -1,0 +1,13 @@
+@article{Gevorkov2019,
+  doi = {10.1107/s2053273319010593},
+  url = {https://doi.org/10.1107/s2053273319010593},
+  year = {2019},
+  month = aug,
+  publisher = {International Union of Crystallography ({IUCr})},
+  volume = {75},
+  number = {5},
+  pages = {694--704},
+  author = {Yaroslav Gevorkov and Oleksandr Yefanov and Anton Barty and Thomas A. White and Valerio Mariani and Wolfgang Brehm and Aleksandra Tolstikova and Rolf-Rainer Grigat and Henry N. Chapman},
+  title = {{XGANDALF} {\textendash} extended gradient descent algorithm for lattice finding},
+  journal = {Acta Crystallographica Section A Foundations and Advances}
+}

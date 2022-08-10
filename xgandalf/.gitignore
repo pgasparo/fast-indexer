@@ -1,0 +1,7 @@
+*~
+*.o
+xgandalf-install
+xgandalf-build
+test-build
+perf.data*
+*.png

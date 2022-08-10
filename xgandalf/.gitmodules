@@ -1,0 +1,3 @@
+[submodule "xgandalf"]
+	path = xgandalf
+	url = https://gitlab.desy.de/thomas.white/xgandalf

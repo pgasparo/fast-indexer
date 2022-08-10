@@ -1,0 +1,13 @@
+#!/bin/bash
+
+if [[ "$1" == "--version" ]]; then
+    cat <<STOP
+Ubuntu clang version 13.0.1-++20220120110924+75e33f71c2da-1~exp1~20220120231001.58
+Target: x86_64-pc-linux-gnu
+Thread model: posix
+InstalledDir: /usr/bin
+STOP
+    exit 0
+fi
+
+exec icpx "$@"

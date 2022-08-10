@@ -1,0 +1,199 @@
+# Hardware
+
+CPU(s):                48
+Thread(s) per core:    1
+Core(s) per socket:    12
+Socket(s):             4
+NUMA node(s):          4
+Model name:            Intel(R) Xeon(R) Gold 6146 CPU @ 3.20GHz
+CPU MHz:               3200.000
+L1d cache:             32K
+L1i cache:             32K
+L2 cache:              1024K
+L3 cache:              25344K
+
+# Timings
+
+-- g++-11.2.0
+sequential      - repetitions: 10, time: 7510.48, 751.048 ms per repetition
+seq/native      - repetitions: 10, time: 4489.78, 448.978 ms per repetition
+mkl/seq         - repetitions: 10, time: 8278.71, 827.871 ms per repetition
+mkl/seq/native  - repetitions: 10, time: 4898.29, 489.829 ms per repetition
+omp(10)         - repetitions: 10, time: 7527.15, 752.715 ms per repetition
+omp(10)/native  - repetitions: 10, time: 4523.49, 452.349 ms per repetition
+
+-- icpx-2022.0.0
+seq/native                - repetitions: 10, time: 3096.35, 309.635 ms per repetition
+mkl/seq/native            - repetitions: 10, time: 3240.45, 324.045 ms per repetition
+mkl-direct/seq/native     - repetitions: 10, time: 3203.65, 320.365 ms per repetition
+omp(10)/native            - repetitions: 10, time: 3306.68, 330.668 ms per repetition
+mkl/omp(10)/native        - repetitions: 10, time: 4398.87, 439.887 ms per repetition
+mkl-direct/omp(10)/native - repetitions: 10, time: 4353.52, 435.352 ms per repetition
+
+# Performance with g++ (seq/native)
+
+[jungfrau@mx-jungfrau-1 fast_indexer_dev]$ likwid-perfctr -C 7 -g CYCLE_STALLS ./test-build/xgandalf test/data/image0_local.txt 100
+--------------------------------------------------------------------------------
+CPU name:       Intel(R) Xeon(R) Gold 6146 CPU @ 3.20GHz
+CPU type:       Intel Skylake SP processor
+CPU clock:      3.19 GHz
+--------------------------------------------------------------------------------
+Reading data ...
+Calling xgandalf ...
+Found 1 lattices
+(-28.8949 20.3255 10.4157) (-28.1623 -60.4519 41.0357) (39.5733 24.9701 62.8442)
+repetitions: 100, time: 45939.1, 459.391 ms per repetition
+--------------------------------------------------------------------------------
+Group 1: CYCLE_STALLS
++-----------------------------------+---------+--------------+
+|               Event               | Counter |  HWThread 7  |
++-----------------------------------+---------+--------------+
+|         INSTR_RETIRED_ANY         |  FIXC0  | 359405403260 |
+|       CPU_CLK_UNHALTED_CORE       |  FIXC1  | 155634765442 |
+|        CPU_CLK_UNHALTED_REF       |  FIXC2  | 142435639040 |
+|  CYCLE_ACTIVITY_STALLS_L2_PENDING |   PMC0  |    948467444 |
+| CYCLE_ACTIVITY_STALLS_LDM_PENDING |   PMC1  |   8666686989 |
+| CYCLE_ACTIVITY_STALLS_L1D_PENDING |   PMC2  |   3700975363 |
+|    CYCLE_ACTIVITY_STALLS_TOTAL    |   PMC3  |  12884605857 |
++-----------------------------------+---------+--------------+
+
++----------------------------------------+-------------+
+|                 Metric                 |  HWThread 7 |
++----------------------------------------+-------------+
+|           Runtime (RDTSC) [s]          |     46.0241 |
+|          Runtime unhalted [s]          |     48.8301 |
+|               Clock [MHz]              |   3482.6280 |
+|                   CPI                  |      0.4330 |
+|         Total execution stalls         | 12884605857 |
+|     Stalls caused by L1D misses [%]    |     28.7240 |
+|     Stalls caused by L2 misses [%]     |      7.3612 |
+|    Stalls caused by memory loads [%]   |     67.2639 |
+|        Execution stall rate [%]        |      8.2787 |
+|  Stalls caused by L1D misses rate [%]  |      2.3780 |
+|   Stalls caused by L2 misses rate [%]  |      0.6094 |
+| Stalls caused by memory loads rate [%] |      5.5686 |
++----------------------------------------+-------------+
+
+[jungfrau@mx-jungfrau-1 fast_indexer_dev]$ likwid-perfctr -C 7 -g FLOPS_SP ./test-build/xgandalf test/data/image0_local.txt 100
+--------------------------------------------------------------------------------
+CPU name:       Intel(R) Xeon(R) Gold 6146 CPU @ 3.20GHz
+CPU type:       Intel Skylake SP processor
+CPU clock:      3.19 GHz
+--------------------------------------------------------------------------------
+Reading data ...
+Calling xgandalf ...
+Found 1 lattices
+(-28.8949 20.3255 10.4157) (-28.1623 -60.4519 41.0357) (39.5733 24.9701 62.8442)
+repetitions: 100, time: 46193.7, 461.937 ms per repetition
+--------------------------------------------------------------------------------
+Group 1: FLOPS_SP
++------------------------------------------+---------+--------------+
+|                   Event                  | Counter |  HWThread 7  |
++------------------------------------------+---------+--------------+
+|             INSTR_RETIRED_ANY            |  FIXC0  | 359405403544 |
+|           CPU_CLK_UNHALTED_CORE          |  FIXC1  | 155532056048 |
+|           CPU_CLK_UNHALTED_REF           |  FIXC2  | 143252280704 |
+| FP_ARITH_INST_RETIRED_128B_PACKED_SINGLE |   PMC0  |    635328405 |
+|    FP_ARITH_INST_RETIRED_SCALAR_SINGLE   |   PMC1  |  14187705171 |
+| FP_ARITH_INST_RETIRED_256B_PACKED_SINGLE |   PMC2  |    485314802 |
+| FP_ARITH_INST_RETIRED_512B_PACKED_SINGLE |   PMC3  |  46087990408 |
++------------------------------------------+---------+--------------+
+
++----------------------+------------+
+|        Metric        | HWThread 7 |
++----------------------+------------+
+|  Runtime (RDTSC) [s] |    46.2050 |
+| Runtime unhalted [s] |    48.7184 |
+|      Clock [MHz]     |  3466.1307 |
+|          CPI         |     0.4327 |
+|     SP [MFLOP/s]     | 16405.5739 |
+|   AVX SP [MFLOP/s]   | 16043.5130 |
+|  AVX512 SP [MFLOP/s] | 15959.4849 |
+|   Packed [MUOPS/s]   |  1021.7215 |
+|   Scalar [MUOPS/s]   |   307.0600 |
+|  Vectorization ratio |    76.8916 |
++----------------------+------------+
+
+# Performance with icpx (seq/native)
+
+[jungfrau@mx-jungfrau-1 fast_indexer_dev]$ likwid-perfctr -C 7 -g CYCLE_STALLS ./test-build/xgandalf test/data/image0_local.txt 100
+--------------------------------------------------------------------------------
+CPU name:       Intel(R) Xeon(R) Gold 6146 CPU @ 3.20GHz
+CPU type:       Intel Skylake SP processor
+CPU clock:      3.19 GHz
+--------------------------------------------------------------------------------
+Reading data ...
+Calling xgandalf ...
+Found 1 lattices
+(-28.8944 20.3259 10.4157) (-28.1625 -60.4521 41.0362) (39.5747 24.9712 62.8447)
+repetitions: 100, time: 31248, 312.48 ms per repetition
+--------------------------------------------------------------------------------
+Group 1: CYCLE_STALLS
++-----------------------------------+---------+--------------+
+|               Event               | Counter |  HWThread 7  |
++-----------------------------------+---------+--------------+
+|         INSTR_RETIRED_ANY         |  FIXC0  | 216096649598 |
+|       CPU_CLK_UNHALTED_CORE       |  FIXC1  | 106158594614 |
+|        CPU_CLK_UNHALTED_REF       |  FIXC2  |  96072464640 |
+|  CYCLE_ACTIVITY_STALLS_L2_PENDING |   PMC0  |    938459145 |
+| CYCLE_ACTIVITY_STALLS_LDM_PENDING |   PMC1  |   7940664357 |
+| CYCLE_ACTIVITY_STALLS_L1D_PENDING |   PMC2  |   3616310181 |
+|    CYCLE_ACTIVITY_STALLS_TOTAL    |   PMC3  |  13964167177 |
++-----------------------------------+---------+--------------+
+
++----------------------------------------+-------------+
+|                 Metric                 |  HWThread 7 |
++----------------------------------------+-------------+
+|           Runtime (RDTSC) [s]          |     31.2978 |
+|          Runtime unhalted [s]          |     33.2869 |
+|               Clock [MHz]              |   3524.0211 |
+|                   CPI                  |      0.4913 |
+|         Total execution stalls         | 13964167177 |
+|     Stalls caused by L1D misses [%]    |     25.8971 |
+|     Stalls caused by L2 misses [%]     |      6.7205 |
+|    Stalls caused by memory loads [%]   |     56.8646 |
+|        Execution stall rate [%]        |     13.1541 |
+|  Stalls caused by L1D misses rate [%]  |      3.4065 |
+|   Stalls caused by L2 misses rate [%]  |      0.8840 |
+| Stalls caused by memory loads rate [%] |      7.4800 |
++----------------------------------------+-------------+
+
+[jungfrau@mx-jungfrau-1 fast_indexer_dev]$ likwid-perfctr -C 7 -g FLOPS_SP ./test-build/xgandalf test/data/image0_local.txt 100
+--------------------------------------------------------------------------------
+CPU name:       Intel(R) Xeon(R) Gold 6146 CPU @ 3.20GHz
+CPU type:       Intel Skylake SP processor
+CPU clock:      3.19 GHz
+--------------------------------------------------------------------------------
+Reading data ...
+Calling xgandalf ...
+Found 1 lattices
+(-28.8944 20.3259 10.4157) (-28.1625 -60.4521 41.0362) (39.5747 24.9712 62.8447)
+repetitions: 100, time: 31452.9, 314.529 ms per repetition
+--------------------------------------------------------------------------------
+Group 1: FLOPS_SP
++------------------------------------------+---------+--------------+
+|                   Event                  | Counter |  HWThread 7  |
++------------------------------------------+---------+--------------+
+|             INSTR_RETIRED_ANY            |  FIXC0  | 216096704961 |
+|           CPU_CLK_UNHALTED_CORE          |  FIXC1  | 106483532298 |
+|           CPU_CLK_UNHALTED_REF           |  FIXC2  |  96529155456 |
+| FP_ARITH_INST_RETIRED_128B_PACKED_SINGLE |   PMC0  |    881130753 |
+|    FP_ARITH_INST_RETIRED_SCALAR_SINGLE   |   PMC1  |  10901146122 |
+| FP_ARITH_INST_RETIRED_256B_PACKED_SINGLE |   PMC2  |    978303510 |
+| FP_ARITH_INST_RETIRED_512B_PACKED_SINGLE |   PMC3  |  46206665408 |
++------------------------------------------+---------+--------------+
+
++----------------------+------------+
+|        Metric        | HWThread 7 |
++----------------------+------------+
+|  Runtime (RDTSC) [s] |    31.5229 |
+| Runtime unhalted [s] |    33.4104 |
+|      Clock [MHz]     |  3515.8096 |
+|          CPI         |     0.4928 |
+|     SP [MFLOP/s]     | 24158.9088 |
+|   AVX SP [MFLOP/s]   | 23701.2837 |
+|  AVX512 SP [MFLOP/s] | 23453.0061 |
+|   Packed [MUOPS/s]   |  1524.7997 |
+|   Scalar [MUOPS/s]   |   345.8168 |
+|  Vectorization ratio |    81.5132 |
++----------------------+------------+

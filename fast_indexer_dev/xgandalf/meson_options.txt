@@ -1,0 +1,6 @@
+option('mkl', type: 'boolean', value: false)
+option('mkl_direct', type: 'boolean', value: false)
+option('mkl_flavour', type: 'string', value: 'seq')
+option('native', type: 'boolean', value: false)
+option('omp', type: 'boolean', value: false)
+option('download_eigen', type: 'boolean', value: false)

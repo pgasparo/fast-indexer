@@ -4,12 +4,10 @@
 
 A fast indexer based on [xgandalf](https://www.desy.de/~twhite/crystfel/manual-indexamajig.html).
 
-To install, first rebuild the original tgz achive with:
+To install, you first need to install ```ninja```, ```meson``` and a decent C++ compiler. On Arch Linux this can be done with:
 
 ```bash
-cd xgandalf
-cat xgandalf_wrapper.tar.gz.parta* >  xgandalf_wrapper.tar.gz
-tar xzvf xgandalf_wrapper.tar.gz
+sudo pacman -S ninja meson
 ```
 
 Now let's compile it with: 

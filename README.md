@@ -32,12 +32,8 @@ rdir=$(pwd)/ ; sed '0,/\${ROOT:-.}/s/\${ROOT:-.}/CHANGE/' test.sh | sed "s#CHANG
 
 Finally let's make the binary accessible globally linking to a proper global path:
 
-``bash
+```bash
 fatstindexingdir=$(pwd)
 cd ~/bin/
 ln -s ${fatstindexingdir}/test.sh xgandalf-fast
 ```
-
-## 2. nXDS
-
-An indexer based on [nXDS](https://nxds.mr.mpg.de/).

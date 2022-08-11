@@ -2,6 +2,8 @@
 
 A fast indexer based on [xgandalf](https://www.desy.de/~twhite/crystfel/manual-indexamajig.html).
 
+### Install
+
 To install, you first need to install ```ninja```, ```meson```, ```eigen3``` and a decent C++ compiler. On Arch Linux this can be done with:
 
 ```bash
@@ -16,7 +18,44 @@ cd fast_indexer_dev
 ./compile-test.sh cci
 ```
 
-In order to compile you only need a decent C++ compilere and build tools installed. To test the code you can run:
+#### Quick fix in case installation fails... 
+
+In case ```compile-test.sh``` is raising errors, go to the back to the ```fast_indexer_dev``` folder folder and create a new directory:
+
+```bash
+cd fast_indexer_dev
+mkdir test-build
+```
+
+Then get the proper paths:
+
+```bash
+cd test/src
+PATHI=$(pkg-config --cflags /tmp/fast-indexer/fast_indexer_dev/xgandalf-install/lib/pkgconfig/xgandalf.pc)
+# OUTPUT: 
+# -I/tmp/fast-indexer/fast_indexer_dev/xgandalf-install/include -DEIGEN_NO_DEBUG -DEIGEN_NO_AUTOMATIC_RESIZING -I/usr/include/eigen3 
+PATHL=$(pkg-config --libs /tmp/fast-indexer/fast_indexer_dev/xgandalf-install/lib/pkgconfig/xgandalf.pc)
+# OUTPUT:
+# -L/tmp/fast-indexer/fast_indexer_dev/xgandalf-install/lib -lxgandalf
+```
+
+now from you ```test/src/``` folder compile with the command:
+
+```bash
+g++ $PATHI -DEIGEN_NO_DEBUG -DEIGEN_NO_AUTOMATIC_RESIZING -I/usr/include/eigen3 -o ../../test-build/xgandalf XGandalfPerfTest.cpp $PATHL
+```
+
+Finally, we need to set correctly the library path for xgandal:
+
+```bash
+export LD_LIBRARY_PATH=/tmp/fast-indexer/fast_indexer_dev/xgandalf-install/lib/
+```
+
+Don't forge to update the path with yours.
+
+### Test
+
+To test the code you can run:
 
 ```bash
 ./test.sh test/data/image0_peakfinder8.txt

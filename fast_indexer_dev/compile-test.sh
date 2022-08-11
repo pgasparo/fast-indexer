@@ -1,3 +1,5 @@
+#!/bin/bash
+
 TEST_DIR=${PWD}/test/src
 
 if [[ ! -d ${TEST_DIR} ]]; then

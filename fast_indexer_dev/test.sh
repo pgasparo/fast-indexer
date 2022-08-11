@@ -2,7 +2,7 @@
 
 ROOT=${ROOT:-.}
 EXE=${EXE:-${ROOT}/test-build/xgandalf}
-LIBDIR=$(readlink -f $(dirname $(find ${ROOT}/xgandalf-install/lib -name libxgandalf.so)))
+LIBDIR=$(readlink -f $(dirname $(find ${ROOT}/xgandalf-install -name libxgandalf.so)))
 
 if [[ ! -x ${EXE[0]} ]]; then
 	echo "$EXE not found, execute from root dir or set ROOT variable"

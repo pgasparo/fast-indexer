@@ -5,6 +5,10 @@ if [[ ! -d ${TEST_DIR} ]]; then
 	exit 1
 fi
 
+if [[ ! -d ${BUILD_DIR} ]]; then
+        mkdir test-build
+fi
+
 pushd ${TEST_DIR}
 make
 popd

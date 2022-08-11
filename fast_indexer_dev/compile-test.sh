@@ -11,6 +11,5 @@ if [[ ! -d ${BUILD_DIR} ]]; then
         mkdir test-build
 fi
 
-pushd ${TEST_DIR}
+cd ${TEST_DIR}
 make
-popd
